@@ -9,7 +9,7 @@
 // granted to it by virtue of its status as an Intergovernmental Organization
 // or submit itself to any jurisdiction.
 
-/// \file femtoDreamTripletTaskTrackTrackTrack.cxx
+/// \file femtoDreamTripletTaskTrackTrackTrackPbPb.cxx
 /// \brief Tasks that reads the track tables and creates track triplets; only three identical particles can be used
 /// \author Laura Serksnyte, TU München, laura.serksnyte@tum.de
 
@@ -40,7 +40,7 @@ using namespace o2::framework;
 using namespace o2::framework::expressions;
 using namespace o2::soa;
 
-struct femtoDreamTripletTaskTrackTrackTrack {
+struct femtoDreamTripletTaskTrackTrackTrackPbPb {
   SliceCache cache;
   Preslice<aod::FDParticles> perCol = aod::femtodreamparticle::fdCollisionId;
 
@@ -185,7 +185,7 @@ struct femtoDreamTripletTaskTrackTrackTrack {
     int index = 0;
     auto& workflows = context.services().get<RunningWorkflowInfo const>();
     for (DeviceSpec const& device : workflows.devices) {
-      if (device.name.find("femto-dream-triplet-task-track-track-track") != std::string::npos) {
+      if (device.name.find("femto-dream-triplet-task-track-track-track-pbpb") != std::string::npos) {
         if (containsNameValuePair(device.options, "ConfCutPart", ConfCutPart.value) &&
             containsNameValuePair(device.options, "ConfTPCPIDBit", ConfTPCPIDBit.value) &&
             containsNameValuePair(device.options, "ConfTPCTOFPIDBit", ConfTPCTOFPIDBit.value) &&
@@ -295,7 +295,7 @@ struct femtoDreamTripletTaskTrackTrackTrack {
     }
     doSameEvent<false>(thegroupSelectedParts, parts, col.magField(), col.multNtr(), col.multV0M());
   }
-  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrack, processSameEvent, "Enable processing same event", true);
+  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrackPbPb, processSameEvent, "Enable processing same event", true);
 
   /// process function to call doSameEvent with Data which has a mask for containing particles or not
   /// \param col subscribe to the collision table (Data)
@@ -312,7 +312,7 @@ struct femtoDreamTripletTaskTrackTrackTrack {
     }
     doSameEvent<false>(thegroupSelectedParts, parts, col.magField(), col.multNtr(), col.multV0M());
   }
-  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrack, processSameEventMasked, "Enable processing same event with masks", false);
+  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrackPbPb, processSameEventMasked, "Enable processing same event with masks", false);
 
   /// process function for to call doSameEvent with Monte Carlo
   /// \param col subscribe to the collision table (Monte Carlo Reconstructed reconstructed)
@@ -333,7 +333,7 @@ struct femtoDreamTripletTaskTrackTrackTrack {
     }
     doSameEvent<true>(thegroupSelectedParts, parts, col.magField(), col.multNtr(), col.multV0M());
   }
-  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrack, processSameEventMC, "Enable processing same event for Monte Carlo", false);
+  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrackPbPb, processSameEventMC, "Enable processing same event for Monte Carlo", false);
 
   /// process function for to call doSameEvent with Monte Carlo which has a mask for containing particles or not
   /// \param col subscribe to the collision table (Monte Carlo Reconstructed reconstructed)
@@ -354,7 +354,7 @@ struct femtoDreamTripletTaskTrackTrackTrack {
     }
     doSameEvent<true>(thegroupSelectedParts, parts, col.magField(), col.multNtr(), col.multV0M());
   }
-  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrack, processSameEventMCMasked, "Enable processing same event for Monte Carlo", false);
+  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrackPbPb, processSameEventMCMasked, "Enable processing same event for Monte Carlo", false);
 
   /// This function processes the mixed event
   /// \tparam PartitionType
@@ -417,7 +417,7 @@ struct femtoDreamTripletTaskTrackTrackTrack {
       doMixedEvent<false>(groupPartsOne, groupPartsTwo, groupPartsThree, parts, magFieldTesla1, multiplicityCol);
     }
   }
-  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrack, processMixedEvent, "Enable processing mixed events", true);
+  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrackPbPb, processMixedEvent, "Enable processing mixed events", true);
 
   /// process function for to call doMixedEvent with Data which has a mask for containing particles or not
   /// @param cols subscribe to the collisions table (Data)
@@ -449,7 +449,7 @@ struct femtoDreamTripletTaskTrackTrackTrack {
       doMixedEvent<false>(groupPartsOne, groupPartsTwo, groupPartsThree, parts, magFieldTesla1, multiplicityCol);
     }
   }
-  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrack, processMixedEventMasked, "Enable processing mixed events", false);
+  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrackPbPb, processMixedEventMasked, "Enable processing mixed events", false);
 
   /// brief process function for to call doMixedEvent with Monte Carlo
   /// @param cols subscribe to the collisions table (Monte Carlo Reconstructed reconstructed)
@@ -480,7 +480,7 @@ struct femtoDreamTripletTaskTrackTrackTrack {
       doMixedEvent<true>(groupPartsOne, groupPartsTwo, groupPartsThree, parts, magFieldTesla1, multiplicityCol);
     }
   }
-  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrack, processMixedEventMC, "Enable processing mixed events MC", false);
+  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrackPbPb, processMixedEventMC, "Enable processing mixed events MC", false);
 
   /// brief process function for to call doMixedEvent with Monte Carlo which has a mask for containing particles or not
   /// @param cols subscribe to the collisions table (Monte Carlo Reconstructed reconstructed)
@@ -516,13 +516,13 @@ struct femtoDreamTripletTaskTrackTrackTrack {
       doMixedEvent<true>(groupPartsOne, groupPartsTwo, groupPartsThree, parts, magFieldTesla1, multiplicityCol);
     }
   }
-  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrack, processMixedEventMCMasked, "Enable processing mixed events MC", false);
+  PROCESS_SWITCH(femtoDreamTripletTaskTrackTrackTrackPbPb, processMixedEventMCMasked, "Enable processing mixed events MC", false);
 };
 
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {
   WorkflowSpec workflow{
-    adaptAnalysisTask<femtoDreamTripletTaskTrackTrackTrack>(cfgc),
+    adaptAnalysisTask<femtoDreamTripletTaskTrackTrackTrackPbPb>(cfgc),
   };
   return workflow;
 }
